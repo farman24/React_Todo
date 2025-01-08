@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function CreateTodo(){
+export function CreateTodo({ reloadPage }){
     const [title,setTitle]=useState("")
     const [description,setdescription]=useState("")
     return (
@@ -26,11 +26,8 @@ export function CreateTodo(){
                             "Content-type":"application/json"
                         }
                     
-                }).then(async function(ee)  {
-                    fetch("http://localhost:3000/todos").then(async (ee)=>{
-                        const json=await ee.json();
-                        setTodos(json);
-                      })
+                }).then(async function()  {
+                    reloadPage();
                 })
             }}>Add a todo</button>
         </div>

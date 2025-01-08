@@ -1,6 +1,8 @@
 const mongoose=require("mongoose");
 const zod = require("zod");
-mongoose.connect(process.env.mongoUrl)
+require('dotenv').config(); 
+
+mongoose.connect(process.env.mongoDbUrl)
 const Todo=new mongoose.Schema({
     title:String,
     description:String,
