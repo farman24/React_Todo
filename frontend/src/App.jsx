@@ -17,7 +17,7 @@ function App() {
   return (
     <div>
       <CreateTodo reloadPage={reloadPage}></CreateTodo>
-      <Todos props={todos}></Todos>
+      <Todos props={todos} reloadPage={reloadPage}></Todos>
     </div>
   )
 }

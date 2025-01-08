@@ -1,4 +1,4 @@
-export function Todos({ props }) {
+export function Todos({ props, reloadPage }) {
   return (
     <div>
       {props.map(function (todo) {
@@ -8,7 +8,15 @@ export function Todos({ props }) {
             <h5>{todo.description}</h5>
             <button
               onClick={() => {
-                fetch("https://localhost:3000/completed");
+                console.log("Todo ID:", todo._id);
+                fetch("http://localhost:3000/completed", {
+                  method: "POST",
+                  body: JSON.stringify({ id: todo._id }),
+                  headers: { "Content-type": "application/json" },
+                }).then(async function () {
+                  reloadPage();
+                  console.log("reloaded from todosjsx")
+                });
               }}
             >
               {todo.completed == true ? "completed" : "mark as completed"}

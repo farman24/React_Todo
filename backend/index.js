@@ -3,6 +3,7 @@ const app = express()
 const {createTodo,updateTodo}=require('./types')
 const {todoSchema}=require('./db')
 const cors=require("cors")
+const { Console } = require('console')
 app.use(express.json());
 app.use(cors());
 
@@ -37,13 +38,15 @@ app.get('/todos',async (req, res) => {
 app.post('/completed',async (req, res) => {
     const updatePayload=req.body
     const parsedPayload=updateTodo.safeParse(updatePayload);
+
     if(!parsedPayload.success){
         res.status(411).json ({
             msg:'invalid update input'
         })
     }
     const filter= {_id: req.body.id};
-    const update= { completed:true};
+    const todo=await todoSchema.findOne({_id:req.body.id})
+    const update= { completed:!todo.completed};
     await todoSchema.findByIdAndUpdate(filter,update)
 
     res.json ({
